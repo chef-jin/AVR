@@ -1,0 +1,16 @@
+#include <avr/io.h>
+#define F_CPU 16000000UL
+
+int main(void)
+{
+	DDRB=0xFF;
+	TCCR2=0x04; // 노말 타이머 모드 사용
+	TCNT2=131;  // 시작지점 지정
+  while (1)
+  {
+		while ((TIFR&0x01)==0);
+		PORTB=~PORTB; // 오실레이터로 확인하기 위한 토글 오버플로우 발생시 토글됨
+		TCNT2=131;
+		TIFR=0x01; // 초기화
+	}
+}
