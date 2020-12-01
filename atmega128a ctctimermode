@@ -1,0 +1,17 @@
+#include <avr/io.h>
+#define F_CPU 16000000UL
+
+
+int main(void)
+{
+	DDRB = 0b00010000;
+	TCCR0 = 0b00011100; //ctc mode precscaler 64
+	OCR0 = 124;
+    while (1) 
+    {
+		while ((TIFR&0x02)==0);
+		PORTB=0b00010000;
+		OCR0=124;
+		TIFR=0x02;
+    }
+}
